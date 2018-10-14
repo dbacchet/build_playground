@@ -9,5 +9,5 @@ cc_test(
            ],
     deps = ['//src/logger:logger',
             '//src/threadpool:threadpool',
-            '@googletest//:gtest'],
+            '@gtest//:gtest_main'],
 )
