@@ -1,0 +1,11 @@
+build --copt=-Werror
+# Add C++14 compiler flags.
+build --cxxopt=-std=c++14
+build --host_cxxopt=-std=c++14
+
+# Create a new CROSSTOOL file for our toolchain.
+build:asmjs --crosstool_top=//var/bazel/toolchain:emscripten
+# Use --cpu as a differentiator.
+build:asmjs --cpu=asmjs
+# Specify a "sane" C++ toolchain for the host platform.
+build:asmjs --host_crosstool_top=@bazel_tools//tools/cpp:toolchain

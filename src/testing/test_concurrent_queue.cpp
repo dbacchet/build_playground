@@ -34,12 +34,14 @@ TEST(ConcurrentQueue, push) {
     std::thread t4(add_elements, &q, 300);
     std::thread t5(add_elements, &q, 400);
     std::thread t6(pop_elements, &q, 50);
+    std::thread t7(get_one, &q);
     t1.join();
     t2.join();
     t3.join();
     t4.join();
     t5.join();
     t6.join();
-    ASSERT_EQ(q.size(),450);
+    t7.join();
+    ASSERT_EQ(q.size(),449);
 }
 

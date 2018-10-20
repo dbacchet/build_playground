@@ -1,0 +1,66 @@
+major_version: "1"
+minor_version: "0"
+default_target_cpu: "asmjs"
+
+toolchain {
+    toolchain_identifier: "asmjs-toolchain"
+    host_system_name: "i686-unknown-linux-gnu"
+    target_system_name: "asmjs-unknown-emscripten"
+    target_cpu: "asmjs"
+    target_libc: "unknown"
+    compiler: "emscripten"
+    abi_version: "unknown"
+    abi_libc_version: "unknown"
+
+    tool_path { name: "gcc" path: "clang_700/tool_wrappers/clang.sh" }
+    tool_path { name: "ld" path: "lld" }
+    tool_path { name: "ar" path: "llvm-ar" }
+    tool_path { name: "cpp" path: "clang_700/tool_wrappers/clang++.sh" }
+    tool_path { name: "gcov" path: "/bin/false" }
+    tool_path { name: "nm" path: "/bin/false" }
+    tool_path { name: "objdump" path: "/bin/false" }
+    tool_path { name: "strip" path: "/bin/false" }
+
+    cxx_flag: "-std=c++17"
+    compiler_flag: "-isystem"
+    compiler_flag: "external/clang_700/include/c++/v1"
+    compiler_flag: "-isystem"
+    compiler_flag: "external/clang_700/lib/clang/7.0.0/include"
+    compiler_flag: "-isystem"
+    compiler_flag: "/usr/include"
+    cxx_builtin_include_directory: "external/clang_700/include/c++/v1"
+    # cxx_builtin_include_directory: "external/clang_700/lib/clang/7.0.0/include"
+    cxx_builtin_include_directory: "/usr/include"
+    # cxx_builtin_include_directory: "/System/Library/Frameworks"
+    # cxx_builtin_include_directory: "%package(@clang_700//include/c++/v1)%"
+  
+    # Make C++ compilation deterministic. Use linkstamping instead of these
+    # compiler symbols.
+    unfiltered_cxx_flag: "-Wno-builtin-macro-redefined"
+    unfiltered_cxx_flag: "-D__DATE__=\"redacted\""
+    unfiltered_cxx_flag: "-D__TIMESTAMP__=\"redacted\""
+    unfiltered_cxx_flag: "-D__TIME__=\"redacted\""
+
+    linker_flag: "-no-canonical-prefixes"
+
+    compilation_mode_flags {
+      mode: DBG
+      # Enable debug symbols.
+      compiler_flag: "-g"
+    }
+    compilation_mode_flags {
+      mode: OPT
+  
+      # No debug symbols.
+      compiler_flag: "-g0"
+      # Conservative choice for -O
+      compiler_flag: "-O2"
+      # Disable assertions
+      compiler_flag: "-DNDEBUG"
+  
+      # Removal of unused code and data at link time (can this increase binary size in some cases?).
+      compiler_flag: "-ffunction-sections"
+      compiler_flag: "-fdata-sections"
+      linker_flag: "-Wl,--gc-sections"
+    }
+}

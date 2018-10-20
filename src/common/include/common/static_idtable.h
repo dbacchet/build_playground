@@ -37,7 +37,7 @@ struct StaticIDTable {
 // StaticIDTable implementation
 template <typename T, unsigned int N>
 StaticIDTable<T,N>::StaticIDTable()
-: _freelist_idx(0), _size(0), _next_uuid(0) {
+: _size(0), _freelist_idx(0), _next_uuid(0) {
     // fill the _ids list with the next_free_idx info
     for (uint32_t i=0; i<N; i++) {
         _ids[i].index=UINT32_MAX;
