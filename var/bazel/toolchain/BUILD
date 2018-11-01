@@ -1,8 +1,7 @@
 package(default_visibility = ['//visibility:public'])
-cc_toolchain_suite( name = "emscripten",
+cc_toolchain_suite( name = "custom_clang",
                     toolchains = {
-                        "asmjs": ":asmjs_toolchain",
-                        "asmjs|emscripten": ":asmjs_toolchain",
+                        "darwin": ":clang700_toolchain",
                     },
 )
 
@@ -13,15 +12,16 @@ name = "all",
 srcs = ["@clang_700//:all",
         "clang_700/tool_wrappers/clang.sh",
         "clang_700/tool_wrappers/clang++.sh",
+        "clang_700/tool_wrappers/ld.sh",
        ],
 )
 
 cc_toolchain(
-    name = "asmjs_toolchain",
-    toolchain_identifier = "asmjs-toolchain",
+    name = "clang700_toolchain",
+    toolchain_identifier = "clang700-toolchain",
     all_files = ":all",
     compiler_files = ":all",
-    cpu = "asmjs",
+    cpu = "darwin",
     dwp_files = ":empty",
     dynamic_runtime_libs = [":empty"],
     linker_files = ":all",

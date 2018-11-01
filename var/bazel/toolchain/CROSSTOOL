@@ -1,19 +1,19 @@
 major_version: "1"
 minor_version: "0"
-default_target_cpu: "asmjs"
+default_target_cpu: "darwin"
 
 toolchain {
-    toolchain_identifier: "asmjs-toolchain"
-    host_system_name: "i686-unknown-linux-gnu"
-    target_system_name: "asmjs-unknown-emscripten"
-    target_cpu: "asmjs"
+    toolchain_identifier: "clang700-toolchain"
+    host_system_name: "local"
+    target_system_name: "clang700-darwin"
+    target_cpu: "darwin"
     target_libc: "unknown"
-    compiler: "emscripten"
+    compiler: "compiler"
     abi_version: "unknown"
     abi_libc_version: "unknown"
 
     tool_path { name: "gcc" path: "clang_700/tool_wrappers/clang.sh" }
-    tool_path { name: "ld" path: "lld" }
+    tool_path { name: "ld" path: "clang_700/tool_wrappers/ld.sh" }
     tool_path { name: "ar" path: "llvm-ar" }
     tool_path { name: "cpp" path: "clang_700/tool_wrappers/clang++.sh" }
     tool_path { name: "gcov" path: "/bin/false" }
@@ -42,6 +42,7 @@ toolchain {
     unfiltered_cxx_flag: "-D__TIME__=\"redacted\""
 
     linker_flag: "-no-canonical-prefixes"
+    linker_flag: "-lc++"
 
     compilation_mode_flags {
       mode: DBG
@@ -59,8 +60,7 @@ toolchain {
       compiler_flag: "-DNDEBUG"
   
       # Removal of unused code and data at link time (can this increase binary size in some cases?).
-      compiler_flag: "-ffunction-sections"
-      compiler_flag: "-fdata-sections"
-      linker_flag: "-Wl,--gc-sections"
+      # compiler_flag: "-ffunction-sections"
+      # compiler_flag: "-fdata-sections"
     }
 }
