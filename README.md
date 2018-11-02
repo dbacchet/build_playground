@@ -64,3 +64,29 @@ folder in the repo root.
 Every file needs to be declared _explicitly_ in the rules; the main reason is to reduce the dependency on slow OS 
 operation and improve speed.
 Better explanation and a possible workaround [here](https://mesonbuild.com/FAQ.html#why-cant-i-specify-target-files-with-a-wildcard).
+
+# CMake
+
+The project webpage is at this [link](https://cmake.org)
+To build:
+```
+mkdir cmake-build
+cd cmake-build
+cmake .. -GNinja
+ninja
+ninja test
+```
+
+A good intro can be found at this [link](https://cliutils.gitlab.io/modern-cmake)
+
+## notes
+CMake defines targets of different types, and identifies them by name. The name must be unique and and error id thrown 
+in case of collision within the project.
+The tool evolved _a lot_ in the last few years, and versions >3.10 have a much cleaner syntax and a more structured
+set of functionalities. For this comparison I used version 3.12.3.
+
+Subprojects can be fetched automatically (see the `CMakeLists.txt` file in the `subprojects` folder) using the `Fetch`
+module. The side effect of that is that the modules are downloaded in the build folder (during the configuration), and
+replicated for each variant, or downloaded again in case the folder is wiped and the project configured again.
+A `ninja clean` (or `make clean`, depending on which generator has been chosen) will not force to download the package 
+again, that is good.

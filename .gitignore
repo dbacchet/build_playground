@@ -1,2 +1,4 @@
 bazel-*
 meson-build
+cmake-*
+compile_commands.json

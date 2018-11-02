@@ -1,0 +1,5 @@
+add_subdirectory(common)
+add_subdirectory(logger)
+add_subdirectory(samples)
+add_subdirectory(threadpool)
+add_subdirectory(testing)
